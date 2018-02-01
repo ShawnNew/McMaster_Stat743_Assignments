@@ -26,7 +26,7 @@ draw3DPic <- function(bvn, bins) {
   z <- table(x_c, y_c)
   
   # Plot as a 3D histogram:
-  hist3D(z=z, breaks=100)
+  hist3D(z=z)
 }
 
 # Function of Independent Metropolis-Hastings algorithm
@@ -103,10 +103,11 @@ myMainFunction <- function() {
   print("Generate data from Gibbs Sampler algorithm...")
   gibbsbvn <- gibbs(Nsim, mu1, s1, mu2, s2, rho)
   df <- data.frame(ibvn, rwbvn, gibbsbvn)    # create data frame to store in csv file
-  names(df) <- c("DatafromIMH", "DatafromRWMH", "DatafromGibbs")
+  names(df) <- c("iMH_X1", "iMH_X2", "rwMH_X1", "rwMH_x2", "gibbs_X1", "gibbs_X2")
   print("Write the data into csv file...")
   write.csv(df,"dummyData.csv")
   print("Draw pictures")
+  
   opar <- par(no.readonly = TRUE)
   par(mfrow=c(3,1))
   
