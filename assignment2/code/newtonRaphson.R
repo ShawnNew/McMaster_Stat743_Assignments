@@ -16,7 +16,7 @@ J <- function(p, x)
          (p * dnorm(x, mean=10, sd=1) + (1-p) * dnorm(x, mean=13, sd=1))**2)
   #trigamma(al)-1/al
 
-newton <- function (th0, x, U, J, eps=1e-12, maxit=100) {
+newton <- function (th0, x, U, J, eps=1e-5, maxit=100000) {
   # A general function to implement a one-dimensional 
   # Newton-Raphson algorithm to solve the likelihood equation.
   out <- matrix(NA, nrow=maxit+1, ncol=4) # Output matrix
@@ -40,13 +40,16 @@ newton <- function (th0, x, U, J, eps=1e-12, maxit=100) {
   return(list(est=out[iter,1], trace=out))
 }
 
-# Here is a simulated example
+# compute and draw picture
 x <- c(9.29, 12.86, 9.73, 11.45, 10.13, 9.55, 9.00, 9.78,
        12.74, 9.49, 9.70, 13.38, 9.08, 13.35, 9.33, 14.31,
        10.10, 10.03, 10.86, 9.76) #  the given dataset
-#x <- matrix(x, nrow=2, ncol=10)
-#alpha.0 <- mean(x)^2/var(x)
-p.0 <- 0.5       # initial value
-output <- newton(p.0, x, U, J)
-p.hat <- newton(p.0, x, U, J)$est
-#beta.hat <- mean(x)/alpha.hat
+p.0 <- 0.64553       # initial value
+outNR <- newton(p.0, x, U, J)
+outEM <- EM(x, p.0, ll)
+
+plot(outNR$trace[,1],pch=15,col="DarkTurquoise",ylab="Estimation",main="The comparison between NR and EM algorithms")
+points(outEM$trace[,1],pch=16,col="DeepPink",cex=1)
+lines(outNR$trace[,1],col="DarkTurquoise",lty=1)
+lines(outEM$trace[,1],col="DeepPink",lty=2)
+

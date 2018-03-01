@@ -1,11 +1,10 @@
 # R code to implement the EM algorithm for the two examples 
-# done in class on February 1, 2018
 #
 ll <- function(p, x) {
   sum(log(p*dnorm(x, mean=10, sd=1) + (1-p)*dnorm(x, mean=13, sd=1)))
 }
 
-EM <- function(x, init, ll, eps=1e-12, maxit=100) {
+EM <- function(x, init, ll, eps=1e-5, maxit=100000) {
   # A function to implement the EM algorithm for the censored
   # exponential example. The function takes the observed data, 
   # an intital estimate, and the log likelihood function as well
@@ -28,9 +27,3 @@ EM <- function(x, init, ll, eps=1e-12, maxit=100) {
   out <- out[1:i,]
   return(list(est=new, trace=out))
 }
-
-
-x <- c(9.29, 12.86, 9.73, 11.45, 10.13, 9.55, 9.00, 9.78,
-       12.74, 9.49, 9.70, 13.38, 9.08, 13.35, 9.33, 14.31,
-       10.10, 10.03, 10.86, 9.76) #  the given dataset
-p.mle <- EM(x, 0.5, ll)
