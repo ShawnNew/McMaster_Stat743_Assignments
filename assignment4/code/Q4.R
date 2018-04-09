@@ -27,7 +27,6 @@ f <- function(x, y, r){
 }
 
 theta_star <- f(x, y, r)
-  
 b_boot <- (1/r) * sum(theta_star - theta_hat)
 v_boot <- 1 / (r-1) * sum(theta_star - mean(theta_star))
 
