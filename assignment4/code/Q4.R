@@ -14,7 +14,7 @@ b_jack <- (theta_hat/m * sum(y-mean(y)) - (1/n) * sum(x-mean(x))) / mean(y)
 v_jack <- (1/(n*(n-1)) * sum((x-mean(x))^2) + theta_hat^2/(m*(m-1)) * sum((y-mean(y))^2)) / mean(y)^2
 
 # bootstrap
-r <- 1000
+r <- 10000
 f <- function(x, y, r){
   mean_x <- mean(sample(x,length(x),replace = TRUE))
   mean_y <- mean(sample(y, length(y), replace = TRUE))
